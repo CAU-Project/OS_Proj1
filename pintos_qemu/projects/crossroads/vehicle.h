@@ -2,6 +2,7 @@
 #define __PROJECTS_PROJECT1_VEHICLE_H__
 
 #include "projects/crossroads/position.h"
+#include "threads/synch.h"
 
 #define VEHICLE_STATUS_READY 	0
 #define VEHICLE_STATUS_RUNNING	1
@@ -17,5 +18,29 @@ struct vehicle_info {
 };
 
 void vehicle_loop(void *vi);
+void init_on_mainthread(int thread_cnt);
+
+/* One semaphore in a list. */
+struct semaphore_elem 
+  {
+    struct list_elem elem;              /* List element. */
+    struct semaphore semaphore;         /* This semaphore. */
+  };
+
+
+/* Condition variable. */
+struct condition2 
+  {
+    struct list waiters;        /* List of waiting threads. */
+  };
+
+
+
+void cond2_init (struct condition2 *);
+void cond2_wait (struct condition2 *);
+void cond2_signal (struct condition2 *);
+void cond2_broadcast (struct condition2 *);
+
+
 
 #endif /* __PROJECTS_PROJECT1_VEHICLE_H__ */
