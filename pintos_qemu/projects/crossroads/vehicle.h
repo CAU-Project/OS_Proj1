@@ -42,5 +42,9 @@ void cond2_signal (struct condition2 *);
 void cond2_broadcast (struct condition2 *);
 
 
+int is_position_intersection(struct position);
+bool can_enter_intersection(int start, int dest);
+int get_intersection_idx(struct position);
+void before_lock_wait(void);
 
 #endif /* __PROJECTS_PROJECT1_VEHICLE_H__ */
