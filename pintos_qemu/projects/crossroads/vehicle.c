@@ -18,7 +18,7 @@ int lock_wait;
 int avilable_move_count;
 int vehicle_count;
 int remain_count;
-int wait_count;
+
 bool intersection_locked[8]={
 	0,0,0,0,0,0,0,0
 };
@@ -218,7 +218,7 @@ static int try_move(int start, int dest, int step, struct vehicle_info *vi)
 	pos_cur = vi->position;
 
 	if(start == dest){ return 0; }
-	
+
 	if(is_position_intersection(pos_cur)){
 		/*in intersection*/
 		vi->position = pos_next;
@@ -235,7 +235,7 @@ static int try_move(int start, int dest, int step, struct vehicle_info *vi)
 				lock_release(&vi->map_locks[pos.row][pos.col]);		
 			}
 			sema_up(y);
-		}
+		}	
 		return 1;	
 	}
 	else{
@@ -299,7 +299,6 @@ static int try_move(int start, int dest, int step, struct vehicle_info *vi)
 
 		}
 
-
 	}
 
 
@@ -323,11 +322,9 @@ void init_on_mainthread(int thread_cnt){
 	cond2_init(cond);
 
 	
-	wait_count = 0;
 	flag = 0;
 	lock_wait = 0;
 
-	printf("vehicle count = %d",vehicle_count);
 
 }
 
@@ -366,10 +363,9 @@ void vehicle_loop(void *_vi)
 
 		//printf("\n\n\n\n\n\n\nremain_count : %d, vi : %d\n",remain_count,vi->id);
 		if(remain_count > 0){
-			wait_count +=1;
 			sema_up(x);
+
 			/* sleep until remain_count = 0 */
-			
 			cond2_wait(cond);
 
 		}else{
