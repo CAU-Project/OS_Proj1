@@ -302,10 +302,10 @@ static int try_move(int start, int dest, int step, struct vehicle_info *vi)
 				/*3.1 다음 칸에 다른 차가 점유(lock)하고 있다면, 턴을 종료 후 block*/
 				before_lock_wait();
 				lock_acquire(&vi->map_locks[pos_next.row][pos_next.col]);
-				sema_down(x);
-				remain_count +=1;
 				lock_wait++;
-				sema_up(x);			
+				remain_count++;
+				sema_down(x);
+				sema_up(x);	
 			}
 
 			/*3.2 다음 칸이 비어 있다면 한칸 이동*/
