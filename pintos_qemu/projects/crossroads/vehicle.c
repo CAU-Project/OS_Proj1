@@ -260,7 +260,7 @@ static int try_move(int start, int dest, int step, struct vehicle_info *vi)
 		}
 		/*1.2 이동만 하고 return 1*/
 		return 1;	
-	}
+	} //123
 	else{
 		/*2. 현재 교차로 안에 있지 않은 상태*/
 		if(is_position_intersection(pos_next)){
